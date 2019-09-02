@@ -8,10 +8,8 @@ const AuthorSchema = new Schema({
   },
   quotes: [
     {
-      quote: {
-        type: Schema.Types.ObjectId,
-        ref: "Quote"
-      }
+      type: Schema.Types.ObjectId,
+      ref: "Quote"
     }
   ]
 });

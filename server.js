@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const graphqlExpress = require("express-graphql");
+const extractAuth = require("./utils/extract-authorization");
 
 const schema = require("./graphql/schema");
 const resolvers = require("./graphql/resolvers");
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(extractAuth);
 app.use(
   "/graphql",
   graphqlExpress({

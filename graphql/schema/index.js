@@ -4,11 +4,13 @@ module.exports = buildSchema(`
     type Quote {
         text: String!
         author: Author!
+        _id: ID!
     }
 
     type Author {
         name: String!
         quotes: [Quote!]
+        _id: ID!
     }
 
     input QuoteInput {
@@ -19,7 +21,7 @@ module.exports = buildSchema(`
 
     type RootQuery {
         quotes: [Quote!]!
-        quote(quoteId: ID!): Quote!
+        quote(quoteId: ID): Quote!
         quotesBy(author: ID!): [Quote!]!
         authors: [Author!]!
         author(authorId: ID!): Author!
