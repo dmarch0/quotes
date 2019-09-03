@@ -1,7 +1,6 @@
 const Quote = require("../../models/quote");
 const Author = require("../../models/author");
-const isEmpty = require("../../utils/is-empty");
-const { getAuthor, getQuotes } = require("./common");
+const { getAuthor } = require("./common");
 
 module.exports = {
   quote: async args => {
@@ -21,7 +20,6 @@ module.exports = {
     }
     try {
       const quotesCount = await Quote.count();
-      console.log(quotesCount);
       const random = Math.floor(Math.random() * quotesCount);
       const randomQuote = await Quote.findOne().skip(random);
       if (!randomQuote) {
@@ -35,8 +33,21 @@ module.exports = {
       throw err;
     }
   },
-  quotes: async () => {},
-  quotesBy: args => {},
+  quotes: async (args, req) => {
+    try {
+      if (!req.isAuth) {
+        throw new Error("Unauthorized");
+      }
+      const quotes = await Quote.find();
+      const result = quotes.map(quote => ({
+        ...quote._doc,
+        author: getAuthor.bind(this, quote._doc.author)
+      }));
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  },
   addQuote: async (args, req) => {
     if (!req.isAuth) {
       throw new Error("Unauthorized");
@@ -104,5 +115,15 @@ module.exports = {
       }
     }
   },
-  deleteQuote: args => {}
+  deleteQuote: async args => {
+    try {
+      const quote = await Quote.findByIdAndDelete(args.quoteId);
+      if (!quote) {
+        throw new Error("Quote not found");
+      }
+      return { ...quote._doc, author: getAuthor.bind(this, quote._doc.author) };
+    } catch (error) {
+      throw error;
+    }
+  }
 };

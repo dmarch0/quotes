@@ -22,7 +22,6 @@ module.exports = buildSchema(`
     type RootQuery {
         quotes: [Quote!]!
         quote(quoteId: ID): Quote!
-        quotesBy(author: ID!): [Quote!]!
         authors: [Author!]!
         author(authorId: ID!): Author!
     }
