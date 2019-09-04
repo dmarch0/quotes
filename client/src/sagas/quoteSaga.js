@@ -1,6 +1,6 @@
 import { put, call, takeEvery } from "redux-saga/effects";
 
-import { QUOTE_FETCH, QUOTE_ERROR } from "../actions/types";
+import { QUOTE_FETCH, QUOTE_ERROR, QUOTE_SUCCESS } from "../actions/types";
 import axios from "../config/axios";
 
 function* quoteWatcher() {
@@ -9,19 +9,22 @@ function* quoteWatcher() {
 
 function* quoteWorker() {
   try {
-    const result = yield call(axios, {
+    const response = yield call(axios.post, "/", {
       query: `
-        quote {
+        query {
+          quote {
             text
             author {
-                name
+              name
             }
+          }
         }
     `
     });
-    //to do
-    //put response data to the reducer
+    yield put({ type: QUOTE_SUCCESS, payload: response.data.data.quote });
   } catch (error) {
     yield put({ type: QUOTE_ERROR, payload: error.response.data });
   }
 }
+
+export default quoteWatcher;

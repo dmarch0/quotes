@@ -6,6 +6,7 @@ import store from "./store";
 import Wrapper from "./components/Wrapper";
 import Footer from "./components/Footer";
 import ThemeSwitcher from "./components/ThemeSwitcher";
+import QuoteDisplay from "./components/QuoteDisplay";
 
 console.log(store.getState().theme);
 const App = () => {
@@ -13,7 +14,7 @@ const App = () => {
     <Provider store={store}>
       <Wrapper>
         <ThemeSwitcher />
-        <div>Hello world</div>
+        <QuoteDisplay />
       </Wrapper>
       <Footer />
     </Provider>

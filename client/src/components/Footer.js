@@ -7,7 +7,9 @@ import style from "../config/style";
 const Footer = ({ className }) => {
   return (
     <div className={className}>
-      Quotes (c) <a href="#">Github link</a>
+      <p>
+        Quotes &copy; 2019. Made with React. <a href="#">GitHub link</a>
+      </p>
     </div>
   );
 };
@@ -23,7 +25,9 @@ const StyledFooted = styled(Footer)`
 
   a {
     color: inherit;
-    text-decoration: none;
+  }
+  p {
+    margin: 0;
   }
 `;
 

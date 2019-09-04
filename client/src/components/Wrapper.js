@@ -16,6 +16,7 @@ const Wrapper = styled.div`
   font-family: sans-serif;
   font-style: italic;
   transition: background-color 0.2s linear;
+  overflow: hidden;
 `;
 
 const mapStateToProps = state => ({
